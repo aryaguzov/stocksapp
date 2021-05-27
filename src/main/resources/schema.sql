@@ -1,6 +1,6 @@
-CREATE SEQUENCE global_seq START WITH 0;
+CREATE SEQUENCE IF NOT EXISTS global_seq START WITH 0;
 
-CREATE TABLE symbols
+CREATE TABLE IF NOT EXISTS symbols
 (
     id                         BIGINT DEFAULT nextval('global_seq') PRIMARY KEY,
     symbol                     VARCHAR,
@@ -57,4 +57,21 @@ CREATE TABLE symbols
     ytd_change                 DOUBLE,
     last_trade_time            BIGINT,
     is_us_market_open          BOOLEAN
-)
+);
+
+CREATE TABLE IF NOT EXISTS log_tracking AS
+SELECT *
+FROM symbols
+WHERE 1 = 0;
+
+ALTER TABLE log_tracking
+    ADD COLUMN time_stamp TIMESTAMP;
+
+CREATE TRIGGER symbols_upd
+    AFTER UPDATE
+    ON symbols
+    FOR EACH ROW
+CALL "com.ar.stocksapp.UpdTrigger";
+
+
+
