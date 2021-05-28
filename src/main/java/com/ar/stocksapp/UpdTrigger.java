@@ -26,7 +26,6 @@ public class UpdTrigger implements Trigger {
                 e.printStackTrace();
             }
         });
-
         stmt.executeUpdate();
     }
 

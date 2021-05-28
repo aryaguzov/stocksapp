@@ -31,8 +31,8 @@ public class OnLoadRunner implements CommandLineRunner {
     public void run(String... args) {
         while (true) {
             save();
-            System.out.println("The top 5 highest value stocks: ");
-            System.out.println("The most recent 5 companies with the greatest change percent: ");
+            System.out.println("The top 5 highest value stocks: " + repository.getTopHighestValueStocks());
+            // System.out.println("The most recent 5 companies with the greatest change percent: ");
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
@@ -41,7 +41,7 @@ public class OnLoadRunner implements CommandLineRunner {
         }
     }
 
-    public List<String> findEnabledSymbols() {
+    private List<String> findEnabledSymbols() {
         String symbolsInfoURL = "https://sandbox.iexapis.com/stable/ref-data/symbols?token=" + token;
         JsonNode response = restTemplate.getForObject(symbolsInfoURL, JsonNode.class);
         Objects.requireNonNull(response, "The response is empty.");
@@ -53,7 +53,7 @@ public class OnLoadRunner implements CommandLineRunner {
                 .collect(Collectors.toList());
     }
 
-    public void save() {
+    private void save() {
         findEnabledSymbols().forEach(symbolName -> {
             String requestURL = stocksURL + symbolName + "/quote?token=" + token;
             Symbol symbol = restTemplate.getForObject(requestURL, Symbol.class);
