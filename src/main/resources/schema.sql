@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS symbols
     high                       DOUBLE,
     high_time                  BIGINT,
     high_source                VARCHAR,
+    low                        BIGINT,
     low_time                   BIGINT,
     low_source                 VARCHAR,
     latest_price               DOUBLE,

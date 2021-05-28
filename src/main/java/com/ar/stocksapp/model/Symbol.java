@@ -58,6 +58,9 @@ public class Symbol {
     @Column(name = "high_source")
     private String highSource;
 
+    @Column(name = "low")
+    private Long low;
+
     @Column(name = "low_time")
     private Long lowTime;
 
